@@ -1,0 +1,36 @@
+<h1>Clientes</h1>
+
+@if (loading()) {
+  <p class="status-message">Cargando clientes...</p>
+} @else if (errorMessage()) {
+  <p class="status-message status-message--error">{{ errorMessage() }}</p>
+} @else if (customers().length === 0) {
+  <p class="status-message">No se encontraron clientes.</p>
+} @else {
+  <div class="table-wrapper">
+    <table class="customer-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>DNI</th>
+          <th>Fecha de nacimiento</th>
+          <th>Fecha de creación</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (customer of customers(); track customer.id) {
+          <tr>
+            <td>{{ customer.nombre }}</td>
+            <td>{{ customer.apellido }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.dni }}</td>
+            <td>{{ customer.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ customer.fechaCreacion | date: 'dd/MM/yyyy' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
