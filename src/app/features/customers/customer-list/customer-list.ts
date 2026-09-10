@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { CustomerService } from '../../../core/services/customer.service';
@@ -9,7 +10,7 @@ import { Customer } from '../../../models/customer.model';
 @Component({
   selector: 'app-customer-list',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [DatePipe, FormsModule, RouterLink],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.scss'
 })
