@@ -1,5 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { CustomerService } from '../../../core/services/customer.service';
 import { Customer } from '../../../models/customer.model';
@@ -7,7 +9,7 @@ import { Customer } from '../../../models/customer.model';
 @Component({
   selector: 'app-customer-list',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, FormsModule],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.scss'
 })
@@ -18,15 +20,39 @@ export class CustomerList implements OnInit {
   protected readonly loading = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
 
+  protected dniFilter = '';
+  protected emailFilter = '';
+
   ngOnInit(): void {
-    this.loadCustomers();
+    this.search();
   }
 
-  private loadCustomers(): void {
+  protected search(): void {
+    const dni = this.dniFilter.trim();
+    const email = this.emailFilter.trim();
+
+    if (dni && email) {
+      this.fetchCustomers(this.customerService.getCustomersByDniAndEmail(dni, email));
+    } else if (dni) {
+      this.fetchCustomers(this.customerService.getCustomersByDni(dni));
+    } else if (email) {
+      this.fetchCustomers(this.customerService.getCustomersByEmail(email));
+    } else {
+      this.fetchCustomers(this.customerService.getCustomers());
+    }
+  }
+
+  protected clear(): void {
+    this.dniFilter = '';
+    this.emailFilter = '';
+    this.search();
+  }
+
+  private fetchCustomers(request: Observable<Customer[]>): void {
     this.loading.set(true);
     this.errorMessage.set(null);
 
-    this.customerService.getCustomers().subscribe({
+    request.subscribe({
       next: (customers) => {
         this.customers.set(customers);
         this.loading.set(false);

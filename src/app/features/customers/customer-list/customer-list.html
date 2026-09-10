@@ -1,5 +1,20 @@
 <h1>Clientes</h1>
 
+<form class="filter-form" (ngSubmit)="search()">
+  <div class="filter-field">
+    <label for="dni-filter">DNI:</label>
+    <input id="dni-filter" type="text" name="dni" [(ngModel)]="dniFilter" />
+  </div>
+  <div class="filter-field">
+    <label for="email-filter">Email:</label>
+    <input id="email-filter" type="text" name="email" [(ngModel)]="emailFilter" />
+  </div>
+  <div class="filter-actions">
+    <button type="submit">Buscar</button>
+    <button type="button" (click)="clear()">Limpiar</button>
+  </div>
+</form>
+
 @if (loading()) {
   <p class="status-message">Cargando clientes...</p>
 } @else if (errorMessage()) {
