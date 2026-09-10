@@ -1,6 +1,10 @@
 <h1>Nuevo cliente</h1>
 
-<p class="nav-link"><a routerLink="/customers">&larr; Volver al listado</a></p>
+<p class="nav-link">
+  <a routerLink="/customers">&larr; Volver al listado</a>
+  ·
+  <a routerLink="/indicadores">Indicadores</a>
+</p>
 
 @if (successMessage()) {
   <p class="status-message status-message--success">{{ successMessage() }}</p>
