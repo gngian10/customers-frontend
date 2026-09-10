@@ -7,7 +7,7 @@
 </p>
 
 @if (loading()) {
-  <p class="status-message">Cargando indicadores...</p>
+  <p class="status-message status-message--loading">Cargando indicadores...</p>
 } @else if (errorMessage()) {
   <p class="status-message status-message--error">{{ errorMessage() }}</p>
 } @else {
@@ -36,7 +36,7 @@
   </div>
 
   @if (rows().length === 0) {
-    <p class="status-message">No hay datos de indicadores disponibles.</p>
+    <p class="status-message status-message--empty">No hay datos de indicadores disponibles.</p>
   } @else {
     <div class="table-wrapper">
       <table class="indicators-table">

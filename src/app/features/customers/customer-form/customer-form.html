@@ -92,7 +92,9 @@
   </div>
 
   <div class="form-actions">
-    <button type="submit" [disabled]="submitting()">Guardar cliente</button>
+    <button type="submit" [disabled]="submitting()" [attr.aria-busy]="submitting()">
+      {{ submitting() ? 'Guardando...' : 'Guardar cliente' }}
+    </button>
     <button type="button" (click)="resetForm()">Limpiar</button>
   </div>
 </form>

@@ -22,11 +22,11 @@
 </form>
 
 @if (loading()) {
-  <p class="status-message">Cargando clientes...</p>
+  <p class="status-message status-message--loading">Cargando clientes...</p>
 } @else if (errorMessage()) {
   <p class="status-message status-message--error">{{ errorMessage() }}</p>
 } @else if (customers().length === 0) {
-  <p class="status-message">No se encontraron clientes.</p>
+  <p class="status-message status-message--empty">No se encontraron clientes.</p>
 } @else {
   <div class="table-wrapper">
     <table class="customer-table">
