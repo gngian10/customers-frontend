@@ -1,100 +1,81 @@
-<h1>Nuevo cliente</h1>
+<h2 mat-dialog-title>Nuevo cliente</h2>
 
-<p class="nav-link">
-  <a routerLink="/customers">&larr; Volver al listado</a>
-  ·
-  <a routerLink="/indicadores">Indicadores</a>
-</p>
-
-@if (successMessage()) {
-  <p class="status-message status-message--success">{{ successMessage() }}</p>
-}
-
-@if (apiErrorMessage()) {
-  <p class="status-message status-message--error">{{ apiErrorMessage() }}</p>
-}
-
-<form class="customer-form" [formGroup]="form" (ngSubmit)="submit()">
-  <div class="form-field">
-    <label for="nombre">Nombre</label>
-    <input id="nombre" type="text" formControlName="nombre" />
-    @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
-      <p class="field-error">
-        @if (form.controls.nombre.errors?.['required']) {
-          El nombre es obligatorio.
-        } @else if (form.controls.nombre.errors?.['backend']) {
-          {{ form.controls.nombre.errors?.['backend'] }}
-        }
-      </p>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-dialog-content class="customer-form">
+    @if (apiErrorMessage()) {
+      <p class="status-message status-message--error">{{ apiErrorMessage() }}</p>
     }
-  </div>
 
-  <div class="form-field">
-    <label for="apellido">Apellido</label>
-    <input id="apellido" type="text" formControlName="apellido" />
-    @if (form.controls.apellido.touched && form.controls.apellido.invalid) {
-      <p class="field-error">
-        @if (form.controls.apellido.errors?.['required']) {
-          El apellido es obligatorio.
-        } @else if (form.controls.apellido.errors?.['backend']) {
-          {{ form.controls.apellido.errors?.['backend'] }}
-        }
-      </p>
-    }
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput type="text" formControlName="nombre" />
+      @if (form.controls.nombre.errors?.['required']) {
+        <mat-error>El nombre es obligatorio.</mat-error>
+      } @else if (form.controls.nombre.errors?.['backend']) {
+        <mat-error>{{ form.controls.nombre.errors?.['backend'] }}</mat-error>
+      }
+    </mat-form-field>
 
-  <div class="form-field">
-    <label for="email">Email</label>
-    <input id="email" type="email" formControlName="email" />
-    @if (form.controls.email.touched && form.controls.email.invalid) {
-      <p class="field-error">
-        @if (form.controls.email.errors?.['required']) {
-          El email es obligatorio.
-        } @else if (form.controls.email.errors?.['email']) {
-          El email debe tener un formato válido.
-        } @else if (form.controls.email.errors?.['backend']) {
-          {{ form.controls.email.errors?.['backend'] }}
-        }
-      </p>
-    }
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Apellido</mat-label>
+      <input matInput type="text" formControlName="apellido" />
+      @if (form.controls.apellido.errors?.['required']) {
+        <mat-error>El apellido es obligatorio.</mat-error>
+      } @else if (form.controls.apellido.errors?.['backend']) {
+        <mat-error>{{ form.controls.apellido.errors?.['backend'] }}</mat-error>
+      }
+    </mat-form-field>
 
-  <div class="form-field">
-    <label for="dni">DNI</label>
-    <input id="dni" type="text" formControlName="dni" />
-    @if (form.controls.dni.touched && form.controls.dni.invalid) {
-      <p class="field-error">
-        @if (form.controls.dni.errors?.['required']) {
-          El DNI es obligatorio.
-        } @else if (form.controls.dni.errors?.['pattern']) {
-          El DNI debe contener exactamente 8 dígitos.
-        } @else if (form.controls.dni.errors?.['backend']) {
-          {{ form.controls.dni.errors?.['backend'] }}
-        }
-      </p>
-    }
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      @if (form.controls.email.errors?.['required']) {
+        <mat-error>El email es obligatorio.</mat-error>
+      } @else if (form.controls.email.errors?.['email']) {
+        <mat-error>El email debe tener un formato válido.</mat-error>
+      } @else if (form.controls.email.errors?.['backend']) {
+        <mat-error>{{ form.controls.email.errors?.['backend'] }}</mat-error>
+      }
+    </mat-form-field>
 
-  <div class="form-field">
-    <label for="fechaNacimiento">Fecha de nacimiento</label>
-    <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" />
-    @if (form.controls.fechaNacimiento.touched && form.controls.fechaNacimiento.invalid) {
-      <p class="field-error">
-        @if (form.controls.fechaNacimiento.errors?.['required']) {
-          La fecha de nacimiento es obligatoria.
-        } @else if (form.controls.fechaNacimiento.errors?.['futureDate']) {
-          La fecha de nacimiento no puede ser futura.
-        } @else if (form.controls.fechaNacimiento.errors?.['backend']) {
-          {{ form.controls.fechaNacimiento.errors?.['backend'] }}
-        }
-      </p>
-    }
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>DNI</mat-label>
+      <input matInput type="text" formControlName="dni" />
+      @if (form.controls.dni.errors?.['required']) {
+        <mat-error>El DNI es obligatorio.</mat-error>
+      } @else if (form.controls.dni.errors?.['pattern']) {
+        <mat-error>El DNI debe contener exactamente 8 dígitos.</mat-error>
+      } @else if (form.controls.dni.errors?.['backend']) {
+        <mat-error>{{ form.controls.dni.errors?.['backend'] }}</mat-error>
+      }
+    </mat-form-field>
 
-  <div class="form-actions">
-    <button type="submit" [disabled]="submitting()" [attr.aria-busy]="submitting()">
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput type="date" formControlName="fechaNacimiento" />
+      @if (form.controls.fechaNacimiento.errors?.['required']) {
+        <mat-error>La fecha de nacimiento es obligatoria.</mat-error>
+      } @else if (form.controls.fechaNacimiento.errors?.['futureDate']) {
+        <mat-error>La fecha de nacimiento no puede ser futura.</mat-error>
+      } @else if (form.controls.fechaNacimiento.errors?.['backend']) {
+        <mat-error>{{ form.controls.fechaNacimiento.errors?.['backend'] }}</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button type="button" (click)="cancel()">Cancelar</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="submitting()"
+      [attr.aria-busy]="submitting()"
+    >
+      @if (submitting()) {
+        <mat-spinner diameter="18" class="btn-spinner"></mat-spinner>
+      }
       {{ submitting() ? 'Guardando...' : 'Guardar cliente' }}
     </button>
-    <button type="button" (click)="resetForm()">Limpiar</button>
-  </div>
+  </mat-dialog-actions>
 </form>

@@ -1,5 +1,8 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartData, ChartOptions } from 'chart.js';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { CustomerService } from '../../../core/services/customer.service';
 import { BirthRateByMonthYear, CustomerIndicators } from '../../../models/customer-indicators.model';
@@ -7,7 +10,7 @@ import { BirthRateByMonthYear, CustomerIndicators } from '../../../models/custom
 @Component({
   selector: 'app-indicators-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [BaseChartDirective, MatCardModule, MatProgressSpinnerModule],
   templateUrl: './indicators-dashboard.html',
   styleUrl: './indicators-dashboard.scss'
 })
@@ -19,6 +22,41 @@ export class IndicatorsDashboard implements OnInit {
   protected readonly errorMessage = signal<string | null>(null);
 
   protected readonly rows = computed(() => this.indicators()?.natalidadPorMesAnio ?? []);
+
+  protected readonly chartData = computed<ChartData<'bar', number[], string>>(() => {
+    const rows = this.rows();
+    return {
+      labels: rows.map((row) => this.formatMonthYear(row)),
+      datasets: [
+        {
+          label: 'Cantidad de clientes',
+          data: rows.map((row) => row.cantidad)
+        }
+      ]
+    };
+  });
+
+  protected readonly chartOptions: ChartOptions<'bar'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Cantidad de clientes'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          precision: 0
+        }
+      }
+    }
+  };
 
   ngOnInit(): void {
     this.loadIndicators();

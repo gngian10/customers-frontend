@@ -1,25 +1,54 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 import { Observable } from 'rxjs';
 
 import { CustomerService } from '../../../core/services/customer.service';
 import { Customer } from '../../../models/customer.model';
+import { CustomerForm } from '../customer-form/customer-form';
 
 @Component({
   selector: 'app-customer-list',
   standalone: true,
-  imports: [DatePipe, FormsModule, RouterLink],
+  imports: [
+    DatePipe,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTableModule
+  ],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.scss'
 })
 export class CustomerList implements OnInit {
   private readonly customerService = inject(CustomerService);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly customers = signal<Customer[]>([]);
   protected readonly loading = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
+
+  protected readonly displayedColumns = [
+    'nombre',
+    'apellido',
+    'email',
+    'dni',
+    'fechaNacimiento',
+    'fechaCreacion'
+  ];
 
   protected dniFilter = '';
   protected emailFilter = '';
@@ -47,6 +76,20 @@ export class CustomerList implements OnInit {
     this.dniFilter = '';
     this.emailFilter = '';
     this.search();
+  }
+
+  protected openCreateCustomerDialog(): void {
+    this.dialog
+      .open(CustomerForm, {
+        width: '600px',
+        maxWidth: '95vw'
+      })
+      .afterClosed()
+      .subscribe((created) => {
+        if (created) {
+          this.search();
+        }
+      });
   }
 
   private fetchCustomers(request: Observable<Customer[]>): void {

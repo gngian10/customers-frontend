@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0;
+}
+
+.app-toolbar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+.app-toolbar__brand {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.app-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.app-nav__link--active {
+  background-color: color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.app-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .app-toolbar__inner {
+    padding-inline: 1rem;
+    justify-content: center;
+  }
+
+  .app-toolbar__brand {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+  .app-content {
+    padding-inline: 1rem;
+  }
+}

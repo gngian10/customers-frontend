@@ -1,50 +1,42 @@
 :host {
   display: block;
-  padding: 1.5rem;
+  padding-block: 1.5rem;
 }
 
 h1 {
-  margin: 0 0 1rem;
+  margin: 0;
+  font: var(--mat-sys-headline-medium);
 }
 
-.nav-link {
-  margin: 0 0 1.5rem;
+.page-header {
+  margin-bottom: 1.5rem;
+}
 
-  a {
-    color: #1a56db;
-    font-weight: 600;
-    text-decoration: none;
+.card-title {
+  margin: 0 0 1rem;
+  font: var(--mat-sys-title-medium);
+}
 
-    &:hover {
-      text-decoration: underline;
-    }
+mat-card {
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
 .status-message {
-  padding: 0.75rem 1rem;
-  margin: 0 0 1rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background-color: #f5f5f5;
-  color: #333;
-
-  &--loading {
-    background-color: #eef2ff;
-    border-color: #c7d2fe;
-    color: #3730a3;
-  }
-
-  &--empty {
-    background-color: #f5f5f5;
-    border-color: #ddd;
-    color: #555;
-  }
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 2rem 1rem;
+  margin: 0 0 1.5rem;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
 
   &--error {
-    background-color: #fdecec;
-    border-color: #f3b8b8;
-    color: #b00020;
+    color: var(--mat-sys-error);
   }
 }
 
@@ -56,16 +48,12 @@ h1 {
 }
 
 .summary-card {
-  flex: 1 1 220px;
-  padding: 1rem 1.25rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background-color: #fafafa;
+  flex: 1 1 260px;
+  margin-bottom: 0;
 
   h2 {
     margin: 0 0 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
+    font: var(--mat-sys-title-medium);
   }
 
   p {
@@ -73,9 +61,14 @@ h1 {
   }
 
   &__month {
-    font-size: 1.25rem;
-    font-weight: 700;
+    font: var(--mat-sys-headline-small);
   }
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 360px;
 }
 
 .table-wrapper {
@@ -84,28 +77,31 @@ h1 {
 
 .indicators-table {
   width: 100%;
-  border-collapse: collapse;
   min-width: 500px;
+  border-collapse: collapse;
 
   th,
   td {
-    border: 1px solid #ddd;
     padding: 0.5rem 0.75rem;
     text-align: left;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
   }
 
   th {
-    background-color: #f5f5f5;
     font-weight: 600;
   }
 
   tbody tr:nth-child(even) {
-    background-color: #fafafa;
+    background-color: var(--mat-sys-surface-container-low);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   :host {
-    padding: 1rem;
+    padding-block: 1rem;
+  }
+
+  .chart-container {
+    height: 280px;
   }
 }

@@ -1,1 +1,22 @@
-<router-outlet />
+<mat-toolbar color="primary" class="app-toolbar">
+  <div class="app-toolbar__inner">
+    <span class="app-toolbar__brand">Gestión de clientes</span>
+    <nav class="app-nav">
+      <a
+        mat-button
+        routerLink="/customers"
+        routerLinkActive="app-nav__link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Clientes
+      </a>
+      <a mat-button routerLink="/indicadores" routerLinkActive="app-nav__link--active">
+        Indicadores
+      </a>
+    </nav>
+  </div>
+</mat-toolbar>
+
+<main class="app-content">
+  <router-outlet />
+</main>

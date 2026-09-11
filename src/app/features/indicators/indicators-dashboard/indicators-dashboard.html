@@ -1,62 +1,79 @@
-<h1>Indicadores</h1>
-
-<p class="nav-link">
-  <a routerLink="/customers">Clientes</a>
-  ·
-  <a routerLink="/customers/new">Nuevo cliente</a>
-</p>
+<div class="page-header">
+  <h1>Indicadores</h1>
+</div>
 
 @if (loading()) {
-  <p class="status-message status-message--loading">Cargando indicadores...</p>
+  <div class="status-message status-message--loading">
+    <mat-spinner diameter="32"></mat-spinner>
+    <span>Cargando indicadores...</span>
+  </div>
 } @else if (errorMessage()) {
   <p class="status-message status-message--error">{{ errorMessage() }}</p>
 } @else {
   <div class="summary-cards">
-    <div class="summary-card">
-      <h2>Mayor natalidad</h2>
-      @if (indicators()?.mesAnioConMayorNatalidad; as item) {
-        <p class="summary-card__month">{{ formatMonthYear(item) }}</p>
-        <p>{{ item.cantidad }} clientes</p>
-        <p>{{ formatRate(item.tasaNatalidad) }}</p>
-      } @else {
-        <p>Sin datos</p>
-      }
-    </div>
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <h2 class="card-title">Mayor natalidad</h2>
+        @if (indicators()?.mesAnioConMayorNatalidad; as item) {
+          <p class="summary-card__month">{{ formatMonthYear(item) }}</p>
+          <p>{{ item.cantidad }} clientes</p>
+          <p>{{ formatRate(item.tasaNatalidad) }}</p>
+        } @else {
+          <p>Sin datos</p>
+        }
+      </mat-card-content>
+    </mat-card>
 
-    <div class="summary-card">
-      <h2>Menor natalidad</h2>
-      @if (indicators()?.mesAnioConMenorNatalidad; as item) {
-        <p class="summary-card__month">{{ formatMonthYear(item) }}</p>
-        <p>{{ item.cantidad }} clientes</p>
-        <p>{{ formatRate(item.tasaNatalidad) }}</p>
-      } @else {
-        <p>Sin datos</p>
-      }
-    </div>
+    <mat-card class="summary-card">
+      <mat-card-content>
+        <h2 class="card-title">Menor natalidad</h2>
+        @if (indicators()?.mesAnioConMenorNatalidad; as item) {
+          <p class="summary-card__month">{{ formatMonthYear(item) }}</p>
+          <p>{{ item.cantidad }} clientes</p>
+          <p>{{ formatRate(item.tasaNatalidad) }}</p>
+        } @else {
+          <p>Sin datos</p>
+        }
+      </mat-card-content>
+    </mat-card>
   </div>
 
   @if (rows().length === 0) {
     <p class="status-message status-message--empty">No hay datos de indicadores disponibles.</p>
   } @else {
-    <div class="table-wrapper">
-      <table class="indicators-table">
-        <thead>
-          <tr>
-            <th>Mes/Año</th>
-            <th>Cantidad de clientes</th>
-            <th>Tasa de natalidad</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of rows(); track row.anio + '-' + row.mes) {
-            <tr>
-              <td>{{ formatMonthYear(row) }}</td>
-              <td>{{ row.cantidad }}</td>
-              <td>{{ formatRate(row.tasaNatalidad) }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+    <mat-card class="chart-card">
+      <mat-card-content>
+        <h2 class="card-title">Nacimientos por mes/año</h2>
+        <div class="chart-container">
+          <canvas baseChart [data]="chartData()" [options]="chartOptions" type="bar"></canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="table-card">
+      <mat-card-content>
+        <h2 class="card-title">Detalle por mes/año</h2>
+        <div class="table-wrapper">
+          <table class="indicators-table">
+            <thead>
+              <tr>
+                <th>Mes/Año</th>
+                <th>Cantidad de clientes</th>
+                <th>Tasa de natalidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of rows(); track row.anio + '-' + row.mes) {
+                <tr>
+                  <td>{{ formatMonthYear(row) }}</td>
+                  <td>{{ row.cantidad }}</td>
+                  <td>{{ formatRate(row.tasaNatalidad) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
   }
 }
