@@ -1,11 +1,11 @@
 :host {
   display: block;
-  padding-block: 1.5rem;
 }
 
 h1 {
   margin: 0;
-  font: var(--mat-sys-headline-medium);
+  font: var(--mat-sys-headline-small);
+  font-weight: 600;
 }
 
 .page-header {
@@ -73,6 +73,9 @@ mat-card {
 
 .table-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
 }
 
 .indicators-table {
@@ -84,21 +87,36 @@ mat-card {
   td {
     padding: 0.5rem 0.75rem;
     text-align: left;
-    border-bottom: 1px solid var(--mat-sys-outline-variant);
   }
 
   th {
+    font: var(--mat-sys-label-large);
     font-weight: 600;
+    color: var(--mat-sys-on-surface-variant);
+    background-color: var(--mat-sys-surface-container-low);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
   }
 
-  tbody tr:nth-child(even) {
+  td {
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
     background-color: var(--mat-sys-surface-container-low);
   }
 }
 
 @media (max-width: 768px) {
-  :host {
-    padding-block: 1rem;
+  .page-header {
+    margin-bottom: 1.25rem;
+  }
+
+  mat-card {
+    margin-bottom: 1.25rem;
   }
 
   .chart-container {

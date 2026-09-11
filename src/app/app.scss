@@ -1,60 +1,121 @@
 :host {
   display: block;
-  min-height: 100%;
+  height: 100%;
+}
+
+.app-shell {
+  height: 100%;
+  background-color: #f2f5fb;
+}
+
+.app-sidenav {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface);
+  transition: width 0.2s ease;
+  overflow-x: hidden;
+
+  // Angular Material's M3 sidenav shape token defaults to a rounded corner;
+  // override it here to keep the sidebar edges straight.
+  --mat-sidenav-container-shape: 0;
+
+  // The drawer's own inner-container scroll wrapper defaults to overflow: auto
+  // on both axes, which is what produces the horizontal scrollbar at narrow
+  // (collapsed) widths — clip it explicitly.
+  ::ng-deep .mat-drawer-inner-container {
+    overflow-x: hidden;
+  }
+
+  &--collapsed {
+    width: 72px;
+
+    .app-nav__label {
+      opacity: 0;
+      width: 0;
+    }
+  }
+}
+
+.app-sidenav__collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 28px;
+  padding: 1.25rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--mat-sys-on-surface-variant);
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--mat-sys-on-surface) 6%, transparent);
+  }
+}
+
+.app-sidenav__collapse-toggle-icon {
+  flex-shrink: 0;
+  color: var(--mat-sys-primary);
+}
+
+.app-nav {
+  flex: 1;
+  padding-top: 0.5rem;
+}
+
+.app-nav__item {
+  margin: 0;
+  border-radius: 0 !important;
+  overflow: hidden;
+}
+
+.app-nav__label {
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 0.15s ease;
+}
+
+.app-nav__item--active {
+  background-color: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent);
+  font-weight: 600;
+
+  mat-icon {
+    color: var(--mat-sys-primary);
+  }
+}
+
+.app-shell__content {
+  background-color: #f2f5fb;
 }
 
 .app-toolbar {
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: 0;
-}
-
-.app-toolbar__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-inline: 1.5rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  gap: 0.5rem;
 }
 
 .app-toolbar__brand {
   font-weight: 600;
-  white-space: nowrap;
-}
-
-.app-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-}
-
-.app-nav__link--active {
-  background-color: color-mix(in srgb, currentColor 16%, transparent);
 }
 
 .app-content {
+  padding: 1.5rem;
+}
+
+.app-content__inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding-inline: 1.5rem;
 }
 
 @media (max-width: 768px) {
-  .app-toolbar__inner {
-    padding-inline: 1rem;
-    justify-content: center;
-  }
-
-  .app-toolbar__brand {
-    flex-basis: 100%;
-    text-align: center;
-  }
-
   .app-content {
-    padding-inline: 1rem;
+    padding: 1rem;
   }
 }

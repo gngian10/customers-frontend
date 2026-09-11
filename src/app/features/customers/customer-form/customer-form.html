@@ -52,7 +52,14 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Fecha de nacimiento</mat-label>
-      <input matInput type="date" formControlName="fechaNacimiento" />
+      <input
+        matInput
+        [matDatepicker]="birthDatePicker"
+        formControlName="fechaNacimiento"
+        (click)="birthDatePicker.open()"
+      />
+      <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #birthDatePicker></mat-datepicker>
       @if (form.controls.fechaNacimiento.errors?.['required']) {
         <mat-error>La fecha de nacimiento es obligatoria.</mat-error>
       } @else if (form.controls.fechaNacimiento.errors?.['futureDate']) {

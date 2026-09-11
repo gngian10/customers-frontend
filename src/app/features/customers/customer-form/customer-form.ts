@@ -2,10 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { CustomerService } from '../../../core/services/customer.service';
@@ -30,12 +32,15 @@ function futureDateValidator(control: AbstractControl): ValidationErrors | null 
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatNativeDateModule,
     MatProgressSpinnerModule
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './customer-form.html',
   styleUrl: './customer-form.scss'
 })
@@ -52,7 +57,7 @@ export class CustomerForm {
     apellido: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-    fechaNacimiento: ['', [Validators.required, futureDateValidator]]
+    fechaNacimiento: this.fb.control<Date | null>(null, [Validators.required, futureDateValidator])
   });
 
   protected submit(): void {
@@ -64,7 +69,11 @@ export class CustomerForm {
     this.apiErrorMessage.set(null);
     this.submitting.set(true);
 
-    const request: CreateCustomerRequest = this.form.getRawValue();
+    const { fechaNacimiento, ...rest } = this.form.getRawValue();
+    const request: CreateCustomerRequest = {
+      ...rest,
+      fechaNacimiento: this.toDateOnlyString(fechaNacimiento as Date)
+    };
 
     this.customerService.createCustomer(request).subscribe({
       next: () => {
@@ -80,6 +89,13 @@ export class CustomerForm {
 
   protected cancel(): void {
     this.dialogRef.close(false);
+  }
+
+  private toDateOnlyString(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   private handleError(error: HttpErrorResponse): void {

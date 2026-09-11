@@ -11,7 +11,7 @@
   <p class="status-message status-message--error">{{ errorMessage() }}</p>
 } @else {
   <div class="summary-cards">
-    <mat-card class="summary-card">
+    <mat-card class="summary-card" appearance="outlined">
       <mat-card-content>
         <h2 class="card-title">Mayor natalidad</h2>
         @if (indicators()?.mesAnioConMayorNatalidad; as item) {
@@ -24,7 +24,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="summary-card">
+    <mat-card class="summary-card" appearance="outlined">
       <mat-card-content>
         <h2 class="card-title">Menor natalidad</h2>
         @if (indicators()?.mesAnioConMenorNatalidad; as item) {
@@ -41,7 +41,7 @@
   @if (rows().length === 0) {
     <p class="status-message status-message--empty">No hay datos de indicadores disponibles.</p>
   } @else {
-    <mat-card class="chart-card">
+    <mat-card class="chart-card" appearance="outlined">
       <mat-card-content>
         <h2 class="card-title">Nacimientos por mes/año</h2>
         <div class="chart-container">
@@ -50,7 +50,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="table-card">
+    <mat-card class="table-card" appearance="outlined">
       <mat-card-content>
         <h2 class="card-title">Detalle por mes/año</h2>
         <div class="table-wrapper">

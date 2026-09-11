@@ -8,27 +8,33 @@
   </div>
 </div>
 
-<mat-card class="filter-card">
+<mat-card class="filter-card" appearance="outlined">
   <mat-card-content>
     <h2 class="card-title">Filtros</h2>
     <form class="filter-form" (ngSubmit)="search()">
-      <mat-form-field appearance="outline" class="filter-field">
+      <mat-form-field appearance="outline" class="filter-field filter-field--dni">
         <mat-label>DNI</mat-label>
         <input matInput type="text" name="dni" [(ngModel)]="dniFilter" />
       </mat-form-field>
-      <mat-form-field appearance="outline" class="filter-field">
+      <mat-form-field appearance="outline" class="filter-field filter-field--email">
         <mat-label>Email</mat-label>
         <input matInput type="text" name="email" [(ngModel)]="emailFilter" />
       </mat-form-field>
       <div class="filter-actions">
-        <button mat-flat-button color="primary" type="submit">Buscar</button>
-        <button mat-stroked-button type="button" (click)="clear()">Limpiar</button>
+        <button mat-flat-button color="primary" type="submit">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+        <button mat-stroked-button type="button" (click)="clear()">
+          <mat-icon>clear</mat-icon>
+          Limpiar
+        </button>
       </div>
     </form>
   </mat-card-content>
 </mat-card>
 
-<mat-card class="table-card">
+<mat-card class="table-card" appearance="outlined">
   <mat-card-content>
     <h2 class="card-title">Listado de clientes</h2>
 

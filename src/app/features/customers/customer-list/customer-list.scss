@@ -1,11 +1,11 @@
 :host {
   display: block;
-  padding-block: 1.5rem;
 }
 
 h1 {
   margin: 0;
-  font: var(--mat-sys-headline-medium);
+  font: var(--mat-sys-headline-small);
+  font-weight: 600;
 }
 
 .page-header {
@@ -51,14 +51,34 @@ mat-card {
 }
 
 .filter-field {
-  flex: 1 1 220px;
   min-width: 0;
+}
+
+.filter-field--dni {
+  flex: 0 1 200px;
+}
+
+.filter-field--email {
+  flex: 2 1 280px;
 }
 
 .filter-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   padding-top: 0.4rem;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
 }
 
 .status-message {
@@ -78,16 +98,43 @@ mat-card {
 
 .table-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
 }
 
 .customer-table {
   width: 100%;
-  min-width: 700px;
+  min-width: 820px;
+
+  th {
+    font: var(--mat-sys-label-large);
+    font-weight: 600;
+    color: var(--mat-sys-on-surface-variant);
+    background-color: var(--mat-sys-surface-container-low);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  td {
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  tr.mat-mdc-row:last-child td {
+    border-bottom: none;
+  }
+
+  tr.mat-mdc-row:hover td {
+    background-color: var(--mat-sys-surface-container-low);
+  }
 }
 
 @media (max-width: 768px) {
-  :host {
-    padding-block: 1rem;
+  .page-header {
+    margin-bottom: 1.25rem;
+  }
+
+  mat-card {
+    margin-bottom: 1.25rem;
   }
 
   .filter-form {
@@ -95,7 +142,9 @@ mat-card {
     align-items: stretch;
   }
 
-  .filter-field {
+  .filter-field,
+  .filter-field--dni,
+  .filter-field--email {
     flex: 1 1 auto;
   }
 
